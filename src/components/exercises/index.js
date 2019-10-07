@@ -12,7 +12,16 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Exercises = ({ exercises, category }) => {
+const Exercises = ({
+  exercises,
+  category,
+  onSelect,
+  selectedExercise: {
+    id,
+    title = 'Welcome!',
+    description = 'Please select an exercise from the list on the left'
+  }
+}) => {
   console.log('exercises', exercises)
   const classes = useStyles();
   return (
@@ -27,7 +36,7 @@ const Exercises = ({ exercises, category }) => {
                   <List component='ul'>
                     {groupedExercises.map(({ title, id }) =>
                       <ListItem button key={id}>
-                        <ListItemText primary={title}>
+                        <ListItemText primary={title} onClick={() => onSelect(id)}>
                         </ListItemText>
                       </ListItem>
                     )}
@@ -40,11 +49,11 @@ const Exercises = ({ exercises, category }) => {
       <Grid item sm={6}>
         <Paper className={classes.paper}>
           <Typography variant="h5">
-            Welcome!
-            </Typography>
+            {title}
+          </Typography>
           <Typography style={{ marginTop: 20 }}>
-            Please select an exercise from the list on the left
-            </Typography>
+            {description}
+          </Typography>
         </Paper>
       </Grid>
     </Grid>

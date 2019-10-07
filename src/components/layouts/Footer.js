@@ -26,7 +26,7 @@ const Footer = ({ muscles, onSelect, category }) => {
         padding="40px"
       >
         <Tab label='ALL' />
-        {muscles.map(muscle => <Tab label={muscle} key={muscle} />)}
+        {muscles.map(muscleGroup => <Tab label={muscleGroup} key={muscleGroup} />)}
       </Tabs>
     </Paper>
   );

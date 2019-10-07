@@ -9,21 +9,24 @@ const useStyles = makeStyles({
   }
 });
 
-const Footer = ({ muscles }) => {
+const Footer = ({ muscles, onSelect, category }) => {
   let classes = useStyles();
+  const index = category ? muscles.findIndex(group => group === category) + 1 : 0
+  console.log('index', index)
+  const onIndexSelect = (e, index) => onSelect(index === 0 ? '' : muscles[index - 1])
+
   return (
     <Paper className={classes.root}>
       <Tabs
-        value={0}
-        // onChange={handleChange}
+        value={index}
+        onChange={onIndexSelect}
         indicatorColor="primary"
         textColor="primary"
         centered
         padding="40px"
       >
         <Tab label='ALL' />
-        {muscles.map(muscle => <Tab label={muscle} />)}
-
+        {muscles.map(muscle => <Tab label={muscle} key={muscle} />)}
       </Tabs>
     </Paper>
   );

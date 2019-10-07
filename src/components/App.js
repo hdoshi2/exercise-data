@@ -2,7 +2,6 @@ import React, { Component, Fragment } from "react";
 import { Header, Footer } from "./layouts";
 import Exercises from "./exercises";
 import { muscles, exercises } from "./store.js"
-import { returnStatement } from "@babel/types";
 
 // const App = () => {
 //   return <div>Hi from React!</div>;
@@ -10,7 +9,8 @@ import { returnStatement } from "@babel/types";
 
 class App extends Component {
   state = {
-    exercises
+    exercises,
+    category: ''
   }
 
   getExercisesByMuscles() {
@@ -23,13 +23,25 @@ class App extends Component {
     }, {}))
   }
 
+  handleCategorySelected = category => {
+    this.setState({
+      category
+    })
+  }
+
   render() {
     const sortedExercises = this.getExercisesByMuscles()
+    const { category } = this.state
+    console.log("muscles", muscles)
+
     return (
       <Fragment>
         <Header />
-        <Exercises exercises={sortedExercises} />
-        <Footer muscles={muscles} />
+        <Exercises exercises={sortedExercises} category={category} />
+        <Footer
+          muscles={muscles}
+          onSelect={this.handleCategorySelected}
+          category={category} />
       </Fragment>
     );
   }

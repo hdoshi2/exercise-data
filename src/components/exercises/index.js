@@ -12,27 +12,29 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Exercises = ({ exercises }) => {
+const Exercises = ({ exercises, category }) => {
+  console.log('exercises', exercises)
   const classes = useStyles();
   return (
-    <Grid container sm={12}>
+    <Grid container sm={12} item={true}>
       <Grid item sm={6}>
         <Paper className={classes.paper}>
-          {exercises.map(([group, exercises]) =>
-            <Fragment>
-              <Typography variant="h5" style={{ textTransform: 'capitalize' }}>
-                {group}
-                <List component='ul'>
-                  {exercises.map(({ title }) =>
-                    <ListItem>
-                      <ListItemText primary={title}>
-                        TEST
-                  </ListItemText>
-                    </ListItem>
-                  )}
-                </List>
-              </Typography>
-            </Fragment>)}
+          {exercises.map(([group, groupedExercises], id) =>
+            !category || category === group
+              ? <Fragment key={id}>
+                <Typography variant="h5" style={{ textTransform: 'capitalize' }}>
+                  {group}
+                  <List component='ul'>
+                    {groupedExercises.map(({ title, id }) =>
+                      <ListItem button key={id}>
+                        <ListItemText primary={title}>
+                        </ListItemText>
+                      </ListItem>
+                    )}
+                  </List>
+                </Typography>
+              </Fragment>
+              : null)}
         </Paper>
       </Grid>
       <Grid item sm={6}>

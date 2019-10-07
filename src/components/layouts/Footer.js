@@ -9,7 +9,7 @@ const useStyles = makeStyles({
   }
 });
 
-const Footer = () => {
+const Footer = ({ muscles }) => {
   let classes = useStyles();
   return (
     <Paper className={classes.root}>
@@ -21,9 +21,9 @@ const Footer = () => {
         centered
         padding="40px"
       >
-        <Tab label="Item One" />
-        <Tab label="Item Two" />
-        <Tab label="Item Three" />
+        <Tab label='ALL' />
+        {muscles.map(muscle => <Tab label={muscle} />)}
+
       </Tabs>
     </Paper>
   );

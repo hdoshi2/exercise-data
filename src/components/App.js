@@ -14,15 +14,21 @@ class App extends Component {
   }
 
   getExercisesByMuscles() {
-    return this.state.exercises
+    return Object.entries(this.state.exercises.reduce((exercises, exercise) => {
+      const { muscles } = exercise
+
+      exercises[muscles] = exercises[muscles] ? [...exercises[muscles], exercise] : [exercise]
+
+      return exercises
+    }, {}))
   }
 
   render() {
-    console.log(this.getExercisesByMuscles())
+    const sortedExercises = this.getExercisesByMuscles()
     return (
       <Fragment>
         <Header />
-        <Exercises exercises={exercises} />
+        <Exercises exercises={sortedExercises} />
         <Footer muscles={muscles} />
       </Fragment>
     );

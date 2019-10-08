@@ -15,13 +15,25 @@ class App extends Component {
   }
 
   getExercisesByMuscles() {
+
+    const initExercises = muscles.reduce((exercises, category) => ({
+      ...exercises,
+      [category]: []
+    }), {})
+
+    // let initExercises = {}
+
+    // let test = muscles.map(elem => {
+    //   initExercises[elem] = []
+    // })
+
+    console.log('initExercises', initExercises)
+
     return Object.entries(this.state.exercises.reduce((exercises, exercise) => {
       const { muscles } = exercise
-
-      exercises[muscles] = exercises[muscles] ? [...exercises[muscles], exercise] : [exercise]
-
+      exercises[muscles] = [...exercises[muscles], exercise]
       return exercises
-    }, {}))
+    }, initExercises))
   }
 
   handleCategorySelected = category => {
@@ -32,7 +44,7 @@ class App extends Component {
 
 
   handleExerciseSelected = id => {
-    this.setState(({exercises}) => ({
+    this.setState(({ exercises }) => ({
       selectedExercise: exercises.find(ex => ex.id === id)
     }))
   }
@@ -48,7 +60,7 @@ class App extends Component {
   }
 
   handleExerciseDelete = id => {
-    this.setState(({exercises}) => ({
+    this.setState(({ exercises }) => ({
       exercises: exercises.filter(ex => ex.id !== id)
     }))
   }

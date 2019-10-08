@@ -10,7 +10,8 @@ import {
   IconButton,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { DeleteForever } from '@material-ui/icons'
+import { DeleteForever, Edit } from '@material-ui/icons'
+import Form from './Form'
 
 
 const useStyles = makeStyles(theme => ({
@@ -26,12 +27,17 @@ const Exercises = ({
   exercises,
   category,
   onSelect,
+  selectedExercise,
   selectedExercise: {
     id = "",
     title = 'Welcome!',
     description = 'Please select an exercise from the list on the left'
   },
-  onDelete
+  onDelete,
+  onSelectEdit,
+  editMode,
+  muscles,
+  onEdit
 }) => {
   console.log('exercises', exercises)
   const classes = useStyles();
@@ -50,6 +56,9 @@ const Exercises = ({
                         <ListItemText primary={title} onClick={() => onSelect(id)}>
                         </ListItemText>
                         <ListItemSecondaryAction>
+                          <IconButton onClick={() => onSelectEdit(id)}>
+                            <Edit />
+                          </IconButton>
                           <IconButton onClick={() => onDelete(id)}>
                             <DeleteForever />
                           </IconButton>
@@ -64,12 +73,21 @@ const Exercises = ({
       </Grid>
       <Grid item sm={6}>
         <Paper className={classes.paper}>
-          <Typography variant="h5">
-            {title}
-          </Typography>
-          <Typography style={{ marginTop: 20 }}>
-            {description}
-          </Typography>
+          {editMode
+            ? <Form
+                muscles={muscles}
+                onSubmit={onEdit}
+                selectedExercise={selectedExercise}
+              /> :
+            <Fragment>
+              <Typography variant="h5">
+                {title}
+              </Typography>
+              <Typography style={{ marginTop: 20 }}>
+                {description}
+              </Typography>
+            </Fragment>
+          }
         </Paper>
       </Grid>
     </Grid>

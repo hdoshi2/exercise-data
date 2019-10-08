@@ -3,15 +3,13 @@ import { Header, Footer } from "./layouts";
 import Exercises from "./exercises";
 import { muscles, exercises } from "./store.js"
 
-// const App = () => {
-//   return <div>Hi from React!</div>;
-// };
 
 class App extends Component {
   state = {
     exercises,
     category: '',
-    selectedExercise: {}
+    selectedExercise: {},
+    editMode: false
   }
 
   getExercisesByMuscles() {
@@ -65,9 +63,26 @@ class App extends Component {
     }))
   }
 
+  handleExerciseSelectEdit = id => {
+    this.setState(({ exercises }) => ({
+      selectedExercise: exercises.find(ex => ex.id === id),
+      editMode: true
+    }))
+  }
+
+  handleExerciseEdit = exercise => {
+    this.setState(({ exercises }) => ({
+      exercises: [
+        ...exercises.filter(ex => ex.id === exercise.id),
+        exercise
+      ]
+    }))
+  }
+
+
   render() {
     const sortedExercises = this.getExercisesByMuscles()
-    const { category, selectedExercise } = this.state
+    const { category, selectedExercise, editMode } = this.state
     console.log("muscles", muscles)
     console.log("category", category)
 
@@ -82,8 +97,12 @@ class App extends Component {
           exercises={sortedExercises}
           selectedExercise={selectedExercise}
           category={category}
+          muscles={muscles}
+          editMode={editMode}
           onSelect={this.handleExerciseSelected}
           onDelete={this.handleExerciseDelete}
+          onSelectEdit={this.handleExerciseSelectEdit}
+          onEdit={this.handleExerciseEdit}
         />
         <Footer
           muscles={muscles}

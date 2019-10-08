@@ -30,10 +30,9 @@ class App extends Component {
     })
   }
 
-  onExerciseCreate
 
   handleExerciseSelected = id => {
-    this.setState((prevState) => ({
+    this.setState(({exercises}) => ({
       selectedExercise: exercises.find(ex => ex.id === id)
     }))
   }

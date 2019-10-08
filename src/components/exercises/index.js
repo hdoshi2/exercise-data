@@ -17,7 +17,7 @@ const Exercises = ({
   category,
   onSelect,
   selectedExercise: {
-    id,
+    id = "",
     title = 'Welcome!',
     description = 'Please select an exercise from the list on the left'
   }

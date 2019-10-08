@@ -47,6 +47,12 @@ class App extends Component {
     }))
   }
 
+  handleExerciseDelete = id => {
+    this.setState(({exercises}) => ({
+      exercises: exercises.filter(ex => ex.id !== id)
+    }))
+  }
+
   render() {
     const sortedExercises = this.getExercisesByMuscles()
     const { category, selectedExercise } = this.state
@@ -65,6 +71,7 @@ class App extends Component {
           selectedExercise={selectedExercise}
           category={category}
           onSelect={this.handleExerciseSelected}
+          onDelete={this.handleExerciseDelete}
         />
         <Footer
           muscles={muscles}

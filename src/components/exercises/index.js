@@ -1,6 +1,16 @@
 import React, { Fragment } from "react";
-import { Grid, Paper, Typography, List, ListItem, ListItemText } from "@material-ui/core";
+import {
+  Grid,
+  Paper,
+  Typography,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemSecondaryAction,
+  IconButton,
+} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import { DeleteForever } from '@material-ui/icons'
 
 
 const useStyles = makeStyles(theme => ({
@@ -20,7 +30,8 @@ const Exercises = ({
     id = "",
     title = 'Welcome!',
     description = 'Please select an exercise from the list on the left'
-  }
+  },
+  onDelete
 }) => {
   console.log('exercises', exercises)
   const classes = useStyles();
@@ -38,6 +49,11 @@ const Exercises = ({
                       <ListItem button key={id}>
                         <ListItemText primary={title} onClick={() => onSelect(id)}>
                         </ListItemText>
+                        <ListItemSecondaryAction>
+                          <IconButton onClick={() => onDelete(id)}>
+                            <DeleteForever />
+                          </IconButton>
+                        </ListItemSecondaryAction>
                       </ListItem>
                     )}
                   </List>

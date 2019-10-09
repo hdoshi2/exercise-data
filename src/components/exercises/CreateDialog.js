@@ -43,7 +43,6 @@ class CreateDialog extends Component {
         <Fab color="primary" size="small" onClick={this.handleToggle}>
           <AddIcon />
         </Fab>
-
         <Dialog open={open} onClose={this.handleToggle}>
           <DialogTitle id="form-dialog-title">
             Create a new exercise

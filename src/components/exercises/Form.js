@@ -27,6 +27,12 @@ class Form extends Component {
     }
   }
 
+  componentWillReceiveProps({ selectedExercise }) {
+    this.setState({
+      ...selectedExercise
+    })
+  }
+
   handleChange = name => ({ target: { value } }) => {
     this.setState({
       [name]: value
@@ -35,7 +41,7 @@ class Form extends Component {
 
   handleSubmit = () => {
     //TODO: form validation
-    const { title, description, muscles } = this.state
+    const { title } = this.state
     this.props.onSubmit({
       id: title.toLocaleLowerCase().replace(/ /g, '-')
     })
@@ -47,54 +53,53 @@ class Form extends Component {
   }
 
   render() {
-    const { classes, muscles } = this.props
+    const { title, description, muscles } = this.state,
+      { classes, selectedExercise, muscles: categories } = this.props
     return (
-      < div >
-        < form >
-          <TextField
-            label="Title"
-            value={this.state.title}
-            onChange={this.handleChange('title')}
-            margin="normal"
-            className={classes.formControl}
-          />
-          <br />
-          <TextField
-            label="Description"
-            value={this.state.description}
-            onChange={this.handleChange('description')}
-            margin="normal"
-            multiline
-            className={classes.formControl}
-          />
-          <br />
-          <FormControl className={classes.formControl}>
-            <InputLabel htmlFor="muscles">
-              Muscles
-                </InputLabel>
-            <Select
-              value={this.state.muscles}
-              onChange={this.handleChange('muscles')}
-            >
-              {muscles.map((item, id) => (
-                <MenuItem
-                  value={item}
-                  key={id}
-                >
-                  {item}
-                </MenuItem>
-              ))}
-            </Select>
-            <Button
-              color="primary"
-              variant="contained"
-              onClick={this.handleSubmit}
-            >
-              Create
-            </Button>
-          </FormControl>
-        </form >
-      </div>
+      <form>
+        <TextField
+          label="Title"
+          value={title}
+          onChange={this.handleChange('title')}
+          margin="normal"
+          className={classes.formControl}
+        />
+        <br />
+        <FormControl className={classes.formControl}>
+          <InputLabel htmlFor="muscles">
+            Muscles
+        </InputLabel>
+          <Select
+            value={muscles}
+            onChange={this.handleChange('muscles')}
+          >
+            {categories.map(category =>
+              <MenuItem key={category} value={category}>
+                {category}
+              </MenuItem>
+            )}
+          </Select>
+        </FormControl>
+        <br />
+        <TextField
+          multiline
+          rows="4"
+          label="Description"
+          value={description}
+          onChange={this.handleChange('description')}
+          margin="normal"
+          className={classes.formControl}
+          style={{ paddingBottom: 30 }}
+        />
+        <br />
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={this.handleSubmit}
+        >
+          {selectedExercise ? 'Edit' : 'Create'}
+        </Button>
+      </form>
     )
   }
 }

@@ -57,10 +57,10 @@ class App extends Component {
   }
 
   handleExerciseDelete = id => {
-    this.setState(({ exercises }) => ({
+    this.setState(({ exercises, selectedExercise }) => ({
       exercises: exercises.filter(ex => ex.id !== id),
-      selectedExercise: {},
-      editMode: false
+      editMode: false,
+      selectedExercise: selectedExercise.id === id ? {} : selectedExercise
     }))
   }
 

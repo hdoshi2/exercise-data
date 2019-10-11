@@ -13,25 +13,23 @@ class App extends Component {
   }
 
   getExercisesByMuscles() {
+    const initExercises = muscles.reduce(
+      (exercises, category) => ({
+        ...exercises,
+        [category]: []
+      }),
+      {}
+    )
 
-    const initExercises = muscles.reduce((exercises, category) => ({
-      ...exercises,
-      [category]: []
-    }), {})
+    return Object.entries(
+      this.state.exercises.reduce((exercises, exercise) => {
+        const { muscles } = exercise
 
-    // let initExercises = {}
+        exercises[muscles] = [...exercises[muscles], exercise]
 
-    // let test = muscles.map(elem => {
-    //   initExercises[elem] = []
-    // })
-
-    console.log('initExercises', initExercises)
-
-    return Object.entries(this.state.exercises.reduce((exercises, exercise) => {
-      const { muscles } = exercise
-      exercises[muscles] = [...exercises[muscles], exercise]
-      return exercises
-    }, initExercises))
+        return exercises
+      }, initExercises)
+    )
   }
 
   handleCategorySelected = category => {
@@ -43,7 +41,8 @@ class App extends Component {
 
   handleExerciseSelected = id => {
     this.setState(({ exercises }) => ({
-      selectedExercise: exercises.find(ex => ex.id === id)
+      selectedExercise: exercises.find(ex => ex.id === id),
+      editMode: false
     }))
   }
 
@@ -59,7 +58,9 @@ class App extends Component {
 
   handleExerciseDelete = id => {
     this.setState(({ exercises }) => ({
-      exercises: exercises.filter(ex => ex.id !== id)
+      exercises: exercises.filter(ex => ex.id !== id),
+      selectedExercise: {},
+      editMode: false
     }))
   }
 
@@ -73,12 +74,12 @@ class App extends Component {
   handleExerciseEdit = exercise => {
     this.setState(({ exercises }) => ({
       exercises: [
-        ...exercises.filter(ex => ex.id === exercise.id),
+        ...exercises.filter(ex => ex.id !== exercise.id),
         exercise
-      ]
+      ],
+      selectedExercise: { exercise }
     }))
   }
-
 
   render() {
     const sortedExercises = this.getExercisesByMuscles()

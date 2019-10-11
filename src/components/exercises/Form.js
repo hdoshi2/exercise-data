@@ -41,15 +41,11 @@ class Form extends Component {
 
   handleSubmit = () => {
     //TODO: form validation
-    const { title } = this.state
     this.props.onSubmit({
-      id: title.toLocaleLowerCase().replace(/ /g, '-')
+      id: this.state.title.toLocaleLowerCase().replace(/ /g, '-'),
+      ...this.state
     })
-    this.setState({
-      title: "",
-      description: "",
-      muscles: ""
-    })
+    this.setState(this.getInitialState())
   }
 
   render() {
@@ -72,6 +68,7 @@ class Form extends Component {
           <Select
             value={muscles}
             onChange={this.handleChange('muscles')}
+            style={{ textTransform: 'capitalize' }}
           >
             {categories.map(category =>
               <MenuItem key={category} value={category}>

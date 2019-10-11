@@ -33,9 +33,14 @@ class CreateDialog extends Component {
     })
   }
 
+  handleFormSubmit = exercise => {
+    this.handleToggle()
+    this.props.onCreate(exercise)
+  }
+
   render() {
     const { open } = this.state
-    const { muscles, onCreate } = this.props
+    const { muscles } = this.props
 
     console.log('muscles', muscles)
     return (
@@ -51,7 +56,7 @@ class CreateDialog extends Component {
             <DialogContentText>
               Please fill out the form below:
             </DialogContentText>
-            <Form muscles={muscles} onSubmit={onCreate} />
+            <Form muscles={muscles} onSubmit={this.handleFormSubmit} />
           </DialogContent>
         </Dialog>
       </Fragment>
